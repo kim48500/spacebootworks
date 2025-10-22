@@ -1,0 +1,14 @@
+package com.springboot.controller.exam;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+@Controller
+public class Exam01Controller {
+	
+	/* */
+	@RequestMapping(value="/exam01")
+	public String requestMethod() {
+		return "pages/01view";
+	}
+
+}
