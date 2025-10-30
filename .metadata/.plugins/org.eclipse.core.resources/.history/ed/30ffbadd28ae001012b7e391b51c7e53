@@ -1,5 +1,0 @@
-@charset "UTF-8";
-#content{
-	width: 10%;
-	margin: 0 auto;
-}
