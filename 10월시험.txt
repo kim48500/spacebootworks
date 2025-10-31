@@ -1,0 +1,129 @@
+폼데이터dto
+package com.Test.dto;
+
+
+
+import java.sql.Timestamp;
+
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@ToString
+@Getter
+@Setter
+public class MemberDTO {
+	private Long id;  //번호
+	@Email(message="올바른 형식의 이메일 주소여야합니다")
+	private String email; //이메일
+	@NotEmpty(message="비밀번호는 필수 입력 항목입니다")
+	private String passwd; //비밀번호
+	@NotEmpty(message="이름은 필수 입력 항목입니다")
+	private String name;  //이름
+	
+	private Timestamp joinDate; //가입일
+}
+
+2.폼컨트롤러
+package com.Test.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+
+import com.springboot.dto.MemberDTO;
+import com.springboot.service.MemberService;
+
+import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+@AllArgsConstructor  //생성자 주입
+@Slf4j
+@RequestMapping("/members")
+@Controller
+public class MemberController {
+	//서비스 인스턴스 생성
+		private MemberService service;
+
+	    
+
+		//회원 가입 페이지
+		@GetMapping("/singup")
+		public String joinForm(MemberDTO memberDTO) {
+			return "member/singup";
+		}
+		
+		//회원 가입 처리
+		@PostMapping("/singup")
+		public String join(@Valid MemberDTO memberDTO,
+			BindingResult bindingResult) {
+			if(bindingResult.hasErrors()) {
+				return "member/signup";
+			}
+			log.info("member: " + memberDTO);
+			service.save(memberDTO);  //서비스에 있는 save() 호출
+			return "redirect:/home";
+		}
+
+		}
+
+
+뷰페이지
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>회원 가입</title>
+
+</head>
+<body>
+	<div id="container">
+	 	<h2>회원 가입</h2>
+	    <form th:action="members/singup" method="post"
+	    th:object="${MemberDTO}"
+	    		class="joinForm">
+	    		<div th:if="${#fields.hasAnyErrors()}">
+   <div th:each="err : ${#fields.allErrors()}"
+   	th:text="${err}"></div>
+	    	<fieldset>
+	    		<ul>
+	    			<li>
+	    				<label for="email">이메일</label>
+	    				<input type="text" th:field="*{Email}" required>
+	    			</li>
+	    			<li>
+	    				<label for="passwd">비밀번호</label>
+	    				<input type="password" th:field="*{password}">
+	    			</li>
+	    			<li>
+	    				<label for="name">이름</label>
+	    				<input type="text" th:field="*{name}">
+	    			</li>
+	    			<li>
+	    				<label for="gender">성별</label>
+	    				<input type="radio" name="gender" value="남자" checked>남
+	    				<input type="radio" name="gender" value="여자" >여
+	    			</li>
+	    			<li>
+	    				<input type="submit" value="가입">
+	    				<input type="reset" value="취소">
+	    			</li>
+	    		</ul>
+	    	</fieldset>
+	    </form>
+	</div>
+</body>
+</html>
+4.entity나 서버쪽 id를 제대로 확인하는게 좋을거같습니다
+
+
+		
+
+
