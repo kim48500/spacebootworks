@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>인증메인</title>
+</head>
+<body>
+<h2>스프링 시큐리티</h2>
+<ul>
+<li>
+<a th:href="@{/home/main}">/home/main</a>(누구나접근가능)
+</li>
+<li>
+<a th:href="@{/user/main}">/user/main</a>(유저접근가능)
+</li>
+<li>
+<a th:href="@{/admin/main}">/user/main</a>(어드민접근가능)
+</li>
+</ul>
+</body>
+</html>

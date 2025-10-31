@@ -1,0 +1,32 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>유효성 검사</title>
+<style>
+	.error{color: red;}
+</style>
+</head>
+<body>
+	<h3>상품 등록</h3>
+	<form th:action="@{/valid01}" method="post"
+			th:object="${product}">
+		<div th:if="${#fields.hasAnyErrors()}">
+			<div th:each="err : ${#fields.allErrors()}"
+				th:text="${err}" class="error"></div>
+		</div>
+		<p>품명: <input type="text" name="name" th:value="${name}">
+				<!--  <span th:errors="*{name}"></span> -->
+		</p>
+		<p>
+			가격: <input type="number" th:field="*{price}">
+			<!--  <span th:errors="*{price}"></span> -->
+		</p>
+		<p>
+			<input type="submit" value="등록">
+			<input type="reset" value="취소">
+		</p>
+	</form>
+</body>
+</html>

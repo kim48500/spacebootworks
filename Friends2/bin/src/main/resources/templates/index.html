@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Welcome~</title>
+	<link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+	<div id="container">
+		<div id="main">
+			<h2>Good Releation - 조은 사이</h2>
+			<div class="main-pic">
+				<img alt="모래시계" th:src="@{/images/time.jpg}">
+			</div>
+			
+			<div class="menu">
+				<a th:href="@{/members/join}">회원 가입</a> |
+				<a th:href="@{/members}">회원 목록</a> 
+			</div>
+		</div>
+	</div>
+</body>
+</html>
